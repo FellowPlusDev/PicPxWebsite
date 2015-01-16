@@ -1,0 +1,24 @@
+{
+    "name": "deeppic",
+    "version": "0.0.1",
+    "private": true,
+    "authors": [
+        "whwnow <whwnow@gmail.com>",
+        "greatghoul <greatghoul@gmail.com>"
+    ],
+    "description": "上传图片",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "dependencies": {
+        "body-parser": "latest",
+        "cookie-parser": "latest",
+        "ejs": "latest",
+        "errorhandler": "latest",
+        "express": "latest",
+        "express-session": "latest"
+    },
+    "devDependencies": {
+        "gulp": "latest"
+    }
+}
