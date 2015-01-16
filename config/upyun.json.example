@@ -1,0 +1,6 @@
+{
+  "baseUrl": "http://deeppic-test.b0.upaiyun.com/",
+  "bucket": "deeppic-test",
+  "username": "test",
+  "password": "test1234"
+}

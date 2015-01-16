@@ -4,9 +4,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var multer  = require('multer');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var image = require('./routes/image');
 
 var app = express();
 
@@ -19,11 +20,12 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(multer({ inMemory: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/image', image);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
