@@ -2,15 +2,23 @@ doctype html
 html
   head
     title DeepPic
-    link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css')
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='/javascripts/jquery.min.js')
+    script(src='/javascripts/clipboard.min.js')
+    script(src='/javascripts/bootstrap.min.js')
+    script(src='/javascripts/jquery.knob.min.js')
+    script(src='/javascripts/jquery.iframe-transport.min.js')
+    script(src='/javascripts/jquery.ui.widget.min.js')
+    script(src='/javascripts/jquery.fileupload.min.js')
+    link(href='/stylesheets/bootstrap.min.css', rel='stylesheet')
+    link(href='/stylesheets/styles.css', rel='stylesheet')
+    script(src='/javascripts/upload.js')
   body
-    nav.navbar.navbar-default(role='navigation')
-      .container
-          .navbar-header
-            a.navbar-brand(href='#')= title
+    .header
+      nav#top.navbar.navbar-default(role='navigation')
+        .container
+            .navbar-header
+              a.navbar-brand(href='#') DeepPic
 
-    .container
-      if error
-        .alert.alert-danger= error
-      block content
+    if error
+      .alert.alert-danger= error
+    block content

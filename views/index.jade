@@ -1,7 +1,57 @@
 extends layout
 
 block content
-  form(role='form' method='post' action='/image/upload' enctype="multipart/form-data")
-    .form-group
-      input.form-control(type='file' name='picture')
-    button.btn.btn-primary(type=submit) 上传
+  .uploader
+    .container
+      .uploader-div
+        form.uploader-form(method='post', action='image/upload', enctype='multipart/form-data')
+          div
+            h3 拖动图片到页面上或者
+            |             
+            a.btn.btn-primary.uploader-browse-button 选择图片
+            | &nbsp; 
+            input.uploader-form-file(type='file', name='image', multiple='')
+          |           
+          #fileList
+  
+  #terms.modal
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal')
+            span(aria-hidden='true') ×
+            span.sr-only Close
+          h4.modal-title 使用条款
+        .modal-body
+          ol
+            li 使用本网站提供的服务默认为同意本条款，如果您不同意本条款，请立即终止使用本网站。
+            li 禁止上传中国法律法规所禁止的图片，包括但不限于色情、暴力、反动、侵权、侵犯隐私等图片
+            li 禁止上传会导致版权纠纷的图片
+            li 禁止将图片链接发到违反中国法律法规的网站去，包括但不限于色情、暴力、反动、侵犯隐私等网站
+            li 禁止将图片链接发到可能会导致大量流量的网站去
+            li 本站不保证存储在本站图片文件的安全性，请做好备份防止发生文件丢失等情况
+            li 上传到本站的图片均是公开的，即使用户没有传播图片链接，第三方仍有可能获取到该图片
+            li 本站不对因本站图片外链所引起的[法律诉讼、赔偿或者对个人、公司造成的损失以及其他不利影响]负责
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') 关闭
+      // /.modal-content
+    // /.modal-dialog
+  // /.modal
+  .uploader-links-container.hide
+    .container
+      .panel.panel-default.uploader-links-panel
+        .panel-heading
+          | 您选择了
+          span.count-result
+          | 张图片          
+          button.btn.btn-default.btn-xs.select-all-btn 全选
+          button.btn.btn-default.btn-xs.unselect-all-btn 取消
+          button#copy_all_btn.btn.btn-default.btn-xs.copy-all-btn(data-clipboard-target='links-result') 复制
+        .panel-body
+          .links-left
+            .list-group
+              a.list-group-item.active.origin-btn(href='javascript:void(0)') 原始链接
+              a.list-group-item.html-btn(href='javascript:void(0)') HTML代码
+              a.list-group-item.bb-btn(href='javascript:void(0)') BB CODE
+          .links-right
+            textarea#links-result(readonly='')
