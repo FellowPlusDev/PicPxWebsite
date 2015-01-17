@@ -18,15 +18,16 @@ function generateFilename(fileExt) {
 }
 
 router.post('/upload', function(req, res) {
-  var picture = req.files.picture;
-  var filename = generateFilename(picture.extension);
+  var image = req.files.image;
+  var filename = generateFilename(image.extension);
 
-  upyun.upload(picture.buffer, filename, picture.mimetype, function(err, result) {
+  upyun.upload(image.buffer, filename, image.mimetype, function(err, result) {
     if (err) {
       console.error(err.message);
-      res.render('index', { error: '上传失败' });
+      res.json({ status: 'error', message: '上传失败' });
     } else {
-      res.render('image', { url: config.baseUrl + filename })
+      var url = config.baseUrl + filename;
+      res.json({ status: 'success', message: url });
     }
   });
 });
