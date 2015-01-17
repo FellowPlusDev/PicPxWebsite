@@ -12,7 +12,7 @@ var Upyun = require("ez-upyun").Upyun;
 var upyun = new Upyun(config.bucket, config.username, config.password);
 
 function generateFilename(fileExt) {
-  var path = moment().format('YYYY/MM/DD');
+  var path = moment().format('YYMM');
   var filename = shortId.generate() + '.' + fileExt;
   return path + '/' + filename;
 }
