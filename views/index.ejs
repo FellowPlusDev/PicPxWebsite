@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app="DeepPicApp">
+  <head>
+    <meta content="text/html;charset=UTF-8" http-equiv="content-type" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+
+    <title>DeepPic</title>
+    
+    <!-- 
+    <script src="/javascripts/clipboard.min.js"></script>
+    <script src="/javascripts/bootstrap.min.js"></script>
+    <script src="/javascripts/jquery.knob.min.js"></script>
+    <script src="/javascripts/jquery.iframe-transport.min.js"></script>
+    <script src="/javascripts/jquery.ui.widget.min.js"></script>
+    <script src="/javascripts/upload.js"></script>
+    -->
+    <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link href="/stylesheets/styles.css" rel="stylesheet">
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/angular/angular.min.js"></script>
+    <script src="/bower_components/angular-file-upload/angular-file-upload.min.js"></script>
+    <script src="/javascripts/application.js"></script>
+    <script src="/javascripts/angular-file-upload-thumb.js"></script>
+  </head>
+  <body ng-controller="UploadCtrl">
+    <div class="panel panel-default" id="panel-upload">
+      <div class="panel-heading">
+        <a href="https://www.upyun.com/" class="upyun-logo">
+          <img src="http://upfiles.b0.upaiyun.com/logo/90x45.png" alt="UPYUN">
+        </a>
+
+        <h3 class="panel-title">DeepPic</h3>
+      </div>
+
+      <div class="btn-toolbar">
+        <div class="btn-group">
+          <button class="btn btn-xs btn-success" ng-click="clickUpload()">上传图片</button>
+          <input type="file" nv-file-select uploader="uploader" id="file" multiple />
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-xs btn-default">全选</button>
+          <button class="btn btn-xs btn-default">复制</button>
+        </div>
+      </div>
+
+      <div class="panel-body">
+        <div class="thumb" ng-repeat="item in uploader.queue" data-success="{{item.isSuccess}}" data-url="{{item.remoteUrl}}">
+          <a href="###" class="thumbnail">
+            <div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 150 }"></div>
+            <div class="thumb-name">{{item.file.name}}</div>
+            <img da-src="{{item.remoteUrl}}" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

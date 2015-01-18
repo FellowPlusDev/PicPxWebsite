@@ -13,12 +13,6 @@ html
     link(href='/stylesheets/styles.css', rel='stylesheet')
     script(src='/javascripts/upload.js')
   body
-    .header
-      nav#top.navbar.navbar-default(role='navigation')
-        .container
-            .navbar-header
-              a.navbar-brand(href='#') DeepPic
-
     if error
       .alert.alert-danger= error
     block content

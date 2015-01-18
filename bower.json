@@ -1,21 +1,23 @@
 {
-    "name": "deeppic",
-    "version": "0.0.1",
-    "private": true,
-    "authors": [
-        "whwnow <whwnow@gmail.com>",
-        "greatghoul <greatghoul@gmail.com>"
-    ],
-    "description": "上传图片",
-    "license": "MIT",
-    "ignore": [
-        "**/.*",
-        "node_modules"
-    ],
-    "dependencies": {
-        "angular": "latest",
-        "angular-ui-bootstrap": "latest",
-        "require": "latest",
-        "bootstrap": "latest"
-    }
+  "name": "deeppic",
+  "version": "0.0.1",
+  "private": true,
+  "authors": [
+    "whwnow <whwnow@gmail.com>",
+    "greatghoul <greatghoul@gmail.com>"
+  ],
+  "description": "上传图片",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules"
+  ],
+  "dependencies": {
+    "angular": "*",
+    "angular-ui-bootstrap": "latest",
+    "require": "latest",
+    "bootstrap": "latest",
+    "angular-upload": "~1.0.11",
+    "angular-file-upload": "~1.1.5"
+  }
 }

@@ -67,8 +67,8 @@ $(document).ready(function() {
         $("#links-result").focus();
         $("#links-result").select();
     });
-    $(".uploader-browse-button").click(function() {
-        $(".uploader-form-file").click();
+    $("#file-trigger").click(function() {
+        $("#file").click();
     });
 
     $(".select-all-btn").click(function() {
@@ -124,57 +124,59 @@ $(document).ready(function() {
 
     });
 
-    $('.uploader-form')
-        .fileupload(
-            {
-                // This element will accept file drag/drop uploading
-                dropZone : $('body'),
-                pasteZone : $('body'),
-                singleFileUploads : true,
-                limitMultiFileUploads : 1,
+    $('#form-upload').singleFileUploads({
+        // This element will accept file drag/drop uploading
+        dropZone : $('#panel-upload .panel-body'),
+        pasteZone : $('#panel-upload .panel-body'),
+        singleFileUploads : true,
+        limitMultiFileUploads : 1,
 
-                // This function is called when a file is added to the
-                // queue;
-                // either via the browse button, or via drag/drop:
-                add : function(e, data) {
-                    if (data.files[0].type.indexOf("image") < 0) {
-                        alert("请选择图片文件！");
-                        return;
-                    }
+        add : function(e, data) {
+            if (data.files[0].type.indexOf("image") < 0) {
+                alert("请选择图片文件！");
+                return;
+            }
 
-                    var tpl = $('<div class="img-float thumbnail"><img class="thumb" alt=""><div class="name-div"></div><div class="progress-div"></div></div></div>');
+            var tpl = $(''
+                + '<div class="col-lg-3 col-sm-4 col-xs-6 thumb">'
+                + '  <a href="#" class="thumbnail">'
+                + '   <img class="img-responsive" alt="" />'
+                + '  </a>'
+                + '</div>');
 
-                    // Append the file name and file size
-                    if (!data.files[0].name) {
-                        data.files[0].name = '剪贴板.png';
-                        data.files[0].type = 'image/png';
-                    }
-                    tpl.find('.name-div').text(data.files[0].name);
-                    var img = tpl.find("img").eq(0);
-                    // viewFile(data.files[0], img, tpl);
+            // Append the file name and file size
+            if (!data.files[0].name) {
+                data.files[0].name = '剪贴板.png';
+                data.files[0].type = 'image/png';
+            }
 
-                    // 通过file.size可以取得图片大小
-                    var reader = new FileReader();
-                    reader.onload = function(evt) {
-                        var base64 = evt.target.result;
-                        $(img).attr("src", base64);
+            // FIXME: SHOW FILENAME
+            // tpl.find('.name-div').text(data.files[0].name);
+            var img = tpl.find("img").eq(0);
+            // viewFile(data.files[0], img, tpl);
 
-                        // Add the HTML to the UL element
-                        data.context = tpl.appendTo($("#fileList"));
-                        tpl.find('.name-div').hide();
-                        tpl.find('.name-div').css("width", $(img).width());
-                        tpl.find('.name-div').show();
-                        // Automatically upload the file once it is
-                        // added to
-                        // the queue
+            // 通过file.size可以取得图片大小
+            var reader = new FileReader();
+            reader.onload = function(evt) {
+                var base64 = evt.target.result;
+                $(img).attr("src", base64);
 
-                        var jqXHR = data.submit();
-                        // bgContainer.css("background-image","url("+evt.target.result+")");
-                        tpl.addClass("uploading");
-                        $(".uploader-div").addClass("uploader-div-top");
-                    }
-                    reader.readAsDataURL(data.files[0]);
-                },
+                // Add the HTML to the UL element
+                data.context = tpl.appendTo($("#fileList"));
+                tpl.find('.name-div').hide();
+                tpl.find('.name-div').css("width", $(img).width());
+                tpl.find('.name-div').show();
+                // Automatically upload the file once it is
+                // added to
+                // the queue
+
+                var jqXHR = data.submit();
+                // bgContainer.css("background-image","url("+evt.target.result+")");
+                tpl.addClass("uploading");
+                $(".uploader-div").addClass("uploader-div-top");
+            }
+            reader.readAsDataURL(data.files[0]);
+        },
                 progress : function(e, data) {
                     // Calculate the completion percentage of the upload
                     var progress = parseInt(data.loaded / data.total * 100, 10);
