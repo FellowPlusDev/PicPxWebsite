@@ -1,3 +1,130 @@
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+.btn:focus,.btn:active {
+   outline: none !important;
+}
+
+#panel-upload {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+}
+
+#panel-upload .panel-heading {
+    padding-top: 14px;
+    padding-bottom: 14px;
+}
+
+#panel-upload .btn-toolbar {
+    background: #E8E8E8;
+    border-bottom: 1px solid #f4f4f4;
+    padding: 5px 10px;
+}
+
+#panel-upload .btn-toolbar > .btn {
+    margin-left: 0;
+}
+
+#panel-upload .btn-toolbar .actions {
+    display: inline;
+    margin-left: 2px;
+}
+
+#panel-upload .btn-toolbar .v-separator {
+    content: "";
+    display: inline-block;
+    width: 0px;
+    height: 16px;
+    border-right: 1px solid #fafafa;
+    border-left: 1px solid #b4b4b4;
+    padding: 0;
+    vertical-align: middle;
+}
+
+#panel-upload .btn-toolbar .btn-group {
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-left: 0;
+    background: url(/images/sep.png) no-repeat left center;
+}
+
+#output {
+    padding-top: 5px;
+    clear: both;
+}
+
+#output textarea {
+    display: block;
+    width: 100%;
+    height: 60px;
+    background: #fefefe;
+    border: 1px solid #e5e5e5;
+    padding: 3px 5px;
+    resize: none;
+}
+
+#output textarea:focus {
+    outline-offset: 0;
+    outline: none;
+}
+
+#panel-upload .panel-body {
+    height: calc(100% - 80px);
+    overflow-y: auto;
+}
+
+#panel-upload .panel-body.output-mode {
+    height: calc(100% - 143px);
+}
+
+.upyun-logo {
+    position: absolute;
+    margin-right: 10px;
+    right: 0;
+    top: 0;
+}
+
+.thumb {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-align: center; 
+}
+
+.thumb a.thumbnail {
+    border: 3px solid #ddd
+}
+
+.thumb canvas {
+    max-width: 100%;
+    height: 150px;
+}
+
+.thumb.selected a.thumbnail {
+    border-color: #5CB85C;
+}
+
+.thumb-name {
+    color: #ffffff;
+    height: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+    overflow: hidden;
+    z-index: 3;
+    min-width: 100%;
+    max-width: 100%;
+    float: left;
+    margin-top: -21px;
+    position: relative;
+    background-color: rgba(51, 122, 183, 0.6);
+}
+
+.thumb.success .thumb-name {
+    background-color: rgba(90, 184, 92, 0.6);
+}
+
 .footer {
     background-color: rgb(245, 245, 245);
     position: fixed;
@@ -13,6 +140,7 @@
 }
 
 .uploader {
+    display: none;
     overflow: auto;
     top: 50px;
     position: absolute;
@@ -46,7 +174,7 @@ body {
     
 }
 
-.uploader-form-file {
+input[type=file] {
     display: none !important;
 }
 
@@ -65,14 +193,6 @@ body {
     
 }
 
-.thumb {
-    margin: 1 !important;
-    max-height: 140px;
-    max-width: 140px;
-    min-height: 140px;
-    position: relative;
-    z-index: 0;
-}
 
 .progress-div {
     z-index: 2;

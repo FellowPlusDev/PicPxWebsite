@@ -22,12 +22,5 @@ cp config/upyun.json.example config/upyun.json
 
 ```
 npm install
-```
-
----
-
-启动本地测试 server
-
-```
-env NODE_ENV=development ./bin/www
+bower install
 ```
