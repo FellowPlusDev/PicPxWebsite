@@ -18,6 +18,9 @@
     "require": "latest",
     "bootstrap": "latest",
     "angular-upload": "~1.0.11",
-    "angular-file-upload": "~1.1.5"
+    "angular-file-upload": "~1.1.5",
+    "underscore": "~1.7.0",
+    "zeroclipboard": "~2.2.0",
+    "ng-clip": "~0.2.6"
   }
 }
