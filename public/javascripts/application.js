@@ -10,7 +10,7 @@ app.controller('UploadCtrl', function($scope, FileUploader) {
     autoUpload: true,
     alias: 'image',
     filters: [{
-      name: 'imageFilter',  
+      name: 'imageFilter',
       fn: function(item, options) {
         return /image\/.*/.test(item.type)  ;
       }
@@ -36,7 +36,7 @@ app.controller('UploadCtrl', function($scope, FileUploader) {
   }
 
   $scope.selectOutput = function() {
-    angular.element('#output textarea').focus().select();
+    angular.element('.sidebar textarea').focus().select();
   }
 
   $scope.selectAll = function() {
@@ -62,7 +62,7 @@ app.controller('UploadCtrl', function($scope, FileUploader) {
   $scope.output = function() {
     return _.chain(uploader.queue)
             .where({ isSelected: true })
-            .map('remoteUrl')
-            .value().join('\n');
+            .map(function(item) { return item.remoteUrl + '\n'; })
+            .value().join('');
   }
 });
