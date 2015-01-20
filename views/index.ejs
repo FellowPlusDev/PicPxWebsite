@@ -21,51 +21,47 @@
     <script src="/javascripts/application.js"></script>
     <script src="/javascripts/angular-file-upload-thumb.js"></script>
   </head>
-  <body ng-controller="UploadCtrl">
-    <div class="panel panel-default" id="panel-upload">
-      <div class="panel-heading">
-        <a href="https://www.upyun.com/" class="upyun-logo">
-          <img src="http://upfiles.b0.upaiyun.com/logo/90x45.png" alt="UPYUN">
-        </a>
+  <body ng-controller="UploadCtrl" nv-file-over="" over-class="highlight" uploader="uploader">
+    <%= include _header %>
 
-        <h3 class="panel-title">DeepPic</h3>
-      </div>
-
-      <div class="btn-toolbar">
-        <button class="btn btn-xs btn-success" ng-click="clickUpload()">上传图片</button>
-        <input type="file" nv-file-select uploader="uploader" id="file" multiple />
-
-        <div class="actions" ng-show="uploader.queue[0]">
-          <div class="v-separator"></div>
+    <div class="viewport">
+      <div class="sidebar">
+        <div class="toolbar">
           <button class="btn btn-xs btn-default"
                   ng-click="selectAll()">全选</button>
           <button class="btn btn-xs btn-default"
-                  ng-show="isOutputVisible()"
                   ng-click="selectNone()">取消</button>
           <button class="btn btn-xs btn-default"
-                  ng-show="isOutputVisible()"
                   clip-copy="output()"
-                  clip-click="selectOutput()">复制</button>
+                  ng-click="selectOutput()">复制</button>
         </div>
 
-        <div id="output" ng-show="isOutputVisible()">
-          <textarea wrap="off">{{output()}}</textarea>
-        </div>
-      </div>
+        <textarea class="content" wrap="off" readonly="readonly">{{output()}}</textarea>
+      </div><!-- .sidebar -->
 
-      <div class="panel-body {{ isOutputVisible() ? 'output-mode' : '' }}">
-        <div class="row">
-          <div class="col-lg-3 col-md-4 col-xs-6 thumb {{item.isSelected ? 'selected' : ''}} {{item.isSuccess ? 'success' : ''}}"
-               ng-repeat="item in uploader.queue"
-               ng-click="toggleSelect(item)">
-            <a href="###" class="thumbnail">
-              <div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 150 }"></div>
-              <div class="thumb-name">{{item.file.name}}</div>
-              <img da-src="{{item.remoteUrl}}" />
-            </a>
+      <div class="main">
+        <div class="uploader-wrapper" nv-file-drop="" uploader="uploader">
+          <div class="uploader">
+            <h5>拖动图片到页面上或者</h5>
+            <button class="btn btn-sm btn-primary" ng-click="clickUpload()">上传图片</button>
+            <input type="file" nv-file-select uploader="uploader" id="file" multiple />
           </div>
-        </div>
-      </div>
-    </div>
+        </div><!-- .uploader-wrapper -->
+
+        <div class="content">
+          <div class="row-fluid">
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb {{item.isSelected ? 'selected' : ''}} {{item.isSuccess ? 'success' : ''}}"
+                 ng-repeat="item in uploader.queue"
+                 ng-click="toggleSelect(item)">
+              <a href="###" class="thumbnail">
+                <div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 150 }"></div>
+                <div class="thumb-name">{{item.file.name}}</div>
+                <img da-src="{{item.remoteUrl}}" />
+              </a>
+            </div>
+          </div>
+        </div><!-- .content -->
+      </div><!-- .main -->
+    </div><!-- .viewport -->
   </body>
 </html>
