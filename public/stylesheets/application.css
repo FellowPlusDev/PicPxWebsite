@@ -125,21 +125,30 @@ body.highlight .uploader-wrapper {
 .thumb-name {
   color: #ffffff;
   height: 20px;
-  padding-left: 5px;
-  padding-right: 5px;
   overflow: hidden;
   z-index: 3;
-  min-width: 100%;
-  max-width: 100%;
-  float: left;
-  margin-top: -21px;
+  margin: -25px 0 0 0;
   position: relative;
+  border-radius: 0;
+  background: transparent;
+}
+
+.thumb-name span {
+    position: absolute;
+    display: block;
+    width: 100%;
+    color: black;
+}
+
+.progress-bar {
   background-color: rgba(51, 122, 183, 0.6);
 }
 
-.thumb.success .thumb-name {
-  background-color: rgba(90, 184, 92, 0.6);
+.progress-bar-success {
+  background-color: rgba(92, 184, 92, 0.6);
 }
+
+
 
 input[type=file] {
   display: none !important;
