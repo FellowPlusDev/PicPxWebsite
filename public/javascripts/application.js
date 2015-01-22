@@ -16,11 +16,7 @@ app.controller('UploadCtrl', function($scope, FileUploader) {
       }
     }]
   });
-
-  uploader.onProgressItem = function(fileItem, progress) {
-    // console.info('onProgressItem', fileItem, progress);
-  };
-
+  
   uploader.onSuccessItem = function(fileItem, response, status, headers) {
     fileItem.remoteUrl = response.message;
   };
