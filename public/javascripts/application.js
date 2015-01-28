@@ -16,24 +16,37 @@ app.controller('UploadCtrl', function($scope, FileUploader) {
       }
     }]
   });
-  
+
+  angular.element('body').on('paste', function($event) {
+    var items = $event.originalEvent.clipboardData.items;
+    for (var i = 0; i < items.length; i++) {
+      var item = items[i];
+      if (/image\/.*/i.test(item.type)) {
+        var file = item.getAsFile();
+        console.log(item.type);
+        file.name = file.fileName = item.type.replace(/image\//i, 'paste.');
+        uploader.addToQueue(file);
+      }
+    }
+  });
+
   uploader.onSuccessItem = function(fileItem, response, status, headers) {
     fileItem.remoteUrl = response.message;
   };
 
   $scope.clickUpload = function() {
     angular.element('#file').trigger('click');
-  }
+  };
 
   $scope.toggleSelect = function(item) {
     if (item.isSuccess) {
       item.isSelected = !(item.isSelected);
     }
-  }
+  };
 
   $scope.selectOutput = function() {
     angular.element('.sidebar textarea').focus().select();
-  }
+  };
 
   $scope.selectAll = function() {
     _.each(uploader.queue, function(item) {
@@ -41,7 +54,7 @@ app.controller('UploadCtrl', function($scope, FileUploader) {
         item.isSelected = true;
       }
     });
-  }
+  };
 
   $scope.selectNone = function() {
     _.each(uploader.queue, function(item) {
@@ -49,16 +62,16 @@ app.controller('UploadCtrl', function($scope, FileUploader) {
         item.isSelected = false;
       }
     });
-  }
+  };
 
   $scope.isOutputVisible = function() {
     return _.any(uploader.queue, { isSelected: true });
-  }
+  };
 
   $scope.output = function() {
     return _.chain(uploader.queue)
             .where({ isSelected: true })
             .map(function(item) { return item.remoteUrl + '\n'; })
             .value().join('');
-  }
+  };
 });
