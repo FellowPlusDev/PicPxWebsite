@@ -20,7 +20,7 @@ angular
         var helper = {
             support: !!($window.FileReader && $window.CanvasRenderingContext2D),
             isFile: function(item) {
-                return angular.isObject(item) && item instanceof $window.File;
+                return angular.isObject(item) && (item instanceof $window.File || item instanceof $window.Blob);
             },
             isImage: function(file) {
                 var type =  '|' + file.type.slice(file.type.lastIndexOf('/') + 1) + '|';
