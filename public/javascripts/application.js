@@ -64,6 +64,20 @@ app.controller('UploadCtrl', function($scope, FileUploader) {
     });
   };
 
+  $scope.removeSelection = function() {
+    while(true) {
+      var item = _.chain(uploader.queue)
+                  .where({ isSelected: true })
+                  .last().value();
+
+      if (item) {
+        item.remove();
+      } else {
+        break;
+      }
+    }
+  }
+
   $scope.isOutputVisible = function() {
     return _.any(uploader.queue, { isSelected: true });
   };
