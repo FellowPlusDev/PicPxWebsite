@@ -64,6 +64,11 @@ app.controller('UploadCtrl', function($scope, FileUploader) {
     });
   };
 
+  $scope.removeItem = function(item) {
+    item.cancel();
+    item.remove();
+  };
+
   $scope.removeSelection = function() {
     while(true) {
       var item = _.chain(uploader.queue)
