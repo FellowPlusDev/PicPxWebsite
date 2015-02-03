@@ -33,9 +33,11 @@
                   ng-click="selectNone()">取消</button>
           <button class="btn btn-xs btn-default"
                   clip-copy="output()"
-                  ng-click="selectOutput()">复制</button>
-          <button class="btn btn-xs btn-default"
-                  ng-click="removeSelection()">移除</button>
+                  ng-click="selectOutput()">复制外链</button>
+          <div class="pull-right">
+            <button class="btn btn-xs btn-default"
+                    ng-click="removeSelection()">移除所选</button>
+          </div>
         </div>
 
         <textarea class="content" wrap="off" readonly="readonly">{{output()}}</textarea>
@@ -52,15 +54,12 @@
 
         <div class="content">
           <div class="row-fluid">
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb {{item.isSelected ? 'selected' : ''}} {{item.isSuccess ? 'success' : ''}}"
-                 ng-repeat="item in uploader.queue"
-                 ng-click="toggleSelect(item)">
-
-              <a href="javascript:;" class="btn-close" title="移除">
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb {{item.isSelected ? 'selected' : ''}} {{item.isSuccess ? 'success' : ''}}" ng-repeat="item in uploader.queue">
+              <a href="javascript:;" class="btn-close" title="移除" ng-click="removeItem(item)">
                 <span class="glyphicon glyphicon-remove"></span>
               </a>
 
-              <a href="javascript:;" class="thumbnail">
+              <a href="javascript:;" class="thumbnail" ng-click="toggleSelect(item)">
                 <div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 150 }"></div>
                 <div class="thumb-name progress">
                   <div class="progress-bar {{item.isSuccess ? 'progress-bar-success' : ''}}" ng-style="{ 'width': item.progress + '%' }">
