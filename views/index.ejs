@@ -32,6 +32,7 @@
           <button class="btn btn-xs btn-default"
                   ng-click="selectNone()">取消</button>
           <button class="btn btn-xs btn-default"
+                  id="btn-copy"
                   clip-copy="output()"
                   ng-click="selectOutput()">复制外链</button>
           <div class="pull-right">
@@ -55,8 +56,16 @@
         <div class="content">
           <div class="row-fluid">
             <div class="col-lg-3 col-md-4 col-xs-6 thumb {{item.isSelected ? 'selected' : ''}} {{item.isSuccess ? 'success' : ''}}" ng-repeat="item in uploader.queue">
-              <a href="javascript:;" class="btn-close" title="移除" ng-click="removeItem(item)">
+              <a href="javascript:;" class="action action-close" title="移除"
+                 ng-click="removeItem(item)">
                 <span class="glyphicon glyphicon-remove"></span>
+              </a>
+              <a href="javascript:;" class="action action-copy" title="复制链接"
+                 clip-copy="getItemUrl(item)"
+                 clip-click="showCopySuccess(item)"
+                 ng-show="item.isSuccess">
+                <span class="glyphicon"
+                      ng-class="{ 'glyphicon-ok-sign': item.isJustCopied, 'glyphicon-file': !item.isJustCopied }"></span>
               </a>
 
               <a href="javascript:;" class="thumbnail" ng-click="toggleSelect(item)">

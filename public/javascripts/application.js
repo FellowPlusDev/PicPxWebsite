@@ -4,7 +4,7 @@ app.config(['ngClipProvider', function(ngClipProvider) {
   ngClipProvider.setPath("/bower_components/zeroclipboard/dist/ZeroClipboard.swf");
 }]);
 
-app.controller('UploadCtrl', function($scope, FileUploader) {
+app.controller('UploadCtrl', function($scope, $timeout, FileUploader) {
   var uploader = $scope.uploader = new FileUploader({
     url: '/image/upload',
     autoUpload: true,
@@ -42,6 +42,8 @@ app.controller('UploadCtrl', function($scope, FileUploader) {
     if (item.isSuccess) {
       item.isSelected = !(item.isSelected);
     }
+
+    angular.element('#btn-copy').triggerHandler('click');
   };
 
   $scope.selectOutput = function() {
@@ -67,6 +69,17 @@ app.controller('UploadCtrl', function($scope, FileUploader) {
   $scope.removeItem = function(item) {
     item.cancel();
     item.remove();
+  };
+
+  $scope.getItemUrl = function(item) {
+    return item.remoteUrl;
+  };
+
+  $scope.showCopySuccess = function(item) {
+    item.isJustCopied = true;
+    $timeout(function() {
+      item.isJustCopied = false;
+    }, 1000);
   };
 
   $scope.removeSelection = function() {
