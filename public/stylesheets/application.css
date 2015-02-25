@@ -107,15 +107,26 @@ body.highlight .uploader-wrapper {
   text-align: center; 
 }
 
-.thumb a.btn-close {
+.thumb a.action-close {
   position: absolute;
   right: 10px;
   color: #BE8B8D;
   top: -7px;
 }
 
-.thumb a.btn-close:hover {
+.thumb a.action-close:hover {
   color: #D44950;
+}
+
+.thumb a.action-copy {
+  position: absolute;
+  right: 10px;
+  color: #74b4dc;
+  top: 10px;
+}
+
+.thumb a.action-copy:hover {
+  color: #4399cf;
 }
 
 .thumb a.thumbnail {

@@ -7,7 +7,7 @@ app.config(['ngClipProvider', function(ngClipProvider) {
 app.controller('UploadCtrl', function($scope, FileUploader) {
   var uploader = $scope.uploader = new FileUploader({
     url: '/image/upload',
-    autoUpload: true,
+    // autoUpload: true,
     alias: 'image',
     filters: [{
       name: 'imageFilter',
@@ -42,6 +42,8 @@ app.controller('UploadCtrl', function($scope, FileUploader) {
     if (item.isSuccess) {
       item.isSelected = !(item.isSelected);
     }
+
+    angular.element('#btn-copy').triggerHandler('click');
   };
 
   $scope.selectOutput = function() {
