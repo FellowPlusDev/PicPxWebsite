@@ -107,6 +107,11 @@ body.highlight .uploader-wrapper {
   text-align: center; 
 }
 
+.thumb a:focus {
+  outline-offset: 0;
+  outline: none;
+}
+
 .thumb a.action-close {
   position: absolute;
   right: 10px;
