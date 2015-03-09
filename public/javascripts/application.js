@@ -96,6 +96,13 @@ app.controller('UploadCtrl', function($scope, $timeout, FileUploader) {
     }
   }
 
+  // 清除当前所有图片
+  $scope.handleKey = function($event) {
+    if ($event.keyCode == 27) {
+      uploader.clearQueue();
+    }
+  };
+
   $scope.isOutputVisible = function() {
     return _.any(uploader.queue, { isSelected: true });
   };
