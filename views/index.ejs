@@ -21,7 +21,10 @@
     <script src="/javascripts/application.js"></script>
     <script src="/javascripts/angular-file-upload-thumb.js"></script>
   </head>
-  <body ng-controller="UploadCtrl" nv-file-over="" over-class="highlight" uploader="uploader">
+  <body ng-controller="UploadCtrl" nv-file-over=""
+        over-class="highlight"
+        uploader="uploader"
+        ng-keyup="handleKey($event)">
     <%= include _header %>
 
     <div class="viewport">
