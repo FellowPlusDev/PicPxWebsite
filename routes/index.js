@@ -13,11 +13,12 @@ function makePolicy(image) {
 
   var fileExt = image.split('.').pop() || 'jpg';
   var path = moment().format('YYMM');
-  var filename = path + '/' + shortId.generate() + '.' + fileExt;
+  var filename = '/' + path + '/' + shortId.generate() + '.' + fileExt;
 
   return new Buffer(JSON.stringify({
     'bucket': config.bucket,
-    'save-key': filename
+    'save-key': filename,
+    'expiration': moment().unix()+ 300
   })).toString('base64');
 }
 
@@ -36,7 +37,7 @@ router.post('/uptoken', function(req, res) {
   var image = req.body.image;
   var policy = makePolicy(image);
   var signature = makeSignature(policy);
-
+  
   res.json({ policy: policy, signature: signature });
 });
 

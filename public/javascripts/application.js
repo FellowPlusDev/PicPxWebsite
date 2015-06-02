@@ -4,11 +4,10 @@ app.config(['ngClipProvider', function(ngClipProvider) {
   ngClipProvider.setPath("/bower_components/zeroclipboard/dist/ZeroClipboard.swf");
 }]);
 
-app.controller('UploadCtrl', function($scope, $timeout, FileUploader) {
+app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {
   var uploader = $scope.uploader = new FileUploader({
-    url: '/image/upload',
-    autoUpload: true,
-    alias: 'image',
+    url: 'http://v0.api.upyun.com/deeppic',
+    autoUpload: false,
     filters: [{
       name: 'imageFilter',
       fn: function(item, options) {
@@ -31,7 +30,21 @@ app.controller('UploadCtrl', function($scope, $timeout, FileUploader) {
   });
 
   uploader.onSuccessItem = function(fileItem, response, status, headers) {
-    fileItem.remoteUrl = response.message;
+    fileItem.remoteUrl = 'http://deeppic.b0.upaiyun.com' + response.url;
+  };
+
+  uploader.onAfterAddingFile = function(fileItem) {
+    var request = $http.post('/uptoken', { image: fileItem.file.name });
+    
+    request.success(function(data, status, headers, config) {
+      fileItem.formData = [data];
+      fileItem.upload();
+    });
+
+    request.error(function(data, status, headers, config) {
+      console.error(data);
+      fileItem.remove();
+    });
   };
 
   $scope.clickUpload = function() {
