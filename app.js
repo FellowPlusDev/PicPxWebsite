@@ -1,60 +1,24 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var cookieParser = require('cookie-parser');
+var express    = require('express');
 var bodyParser = require('body-parser');
-var multer  = require('multer');
+var utils      = require('./utils')
+var app        = express();
 
-var routes = require('./routes/index');
-
-var app = express();
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(multer({ inMemory: true }));
-app.use(cookieParser());
+app.set('view engine', 'ejs');
+app.use('/assets', express.static('public'));
+app.use('/assets/lib', express.static('bower_components'));
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/bower_components',  express.static(__dirname + '/bower_components'));
-
-app.use('/', routes);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+app.get('/', function(req, res, next) {
+  res.render('index');
 });
 
-// error handlers
+app.post('/uptoken', function(req, res) {
+  var image = req.body.image;
+  var policy = utils.makePolicy(image);
+  var signature = utils.makeSignature(policy);
 
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
-    });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
+  res.json({ policy: policy, signature: signature });
 });
-
 
 module.exports = app;

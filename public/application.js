@@ -1,7 +1,7 @@
 var app = angular.module('DeepPicApp', ['angularFileUpload', 'ngClipboard']);
 
 app.config(['ngClipProvider', function(ngClipProvider) {
-  ngClipProvider.setPath("/bower_components/zeroclipboard/dist/ZeroClipboard.swf");
+  ngClipProvider.setPath("/assets/lib/zeroclipboard/dist/ZeroClipboard.swf");
 }]);
 
 app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {

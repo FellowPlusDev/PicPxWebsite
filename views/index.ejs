@@ -6,25 +6,26 @@
 
     <title>DeepPic</title>
     
-    <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/stylesheets/application.css" rel="stylesheet">
+    <link href="/assets/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/application.css" rel="stylesheet">
 
-    <script src="/bower_components/underscore/underscore-min.js"></script>
+    <script src="/assets/lib/underscore/underscore-min.js"></script>
 
-    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="/bower_components/zeroclipboard/dist/ZeroClipboard.min.js"></script>
+    <script src="/assets/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/assets/lib/zeroclipboard/dist/ZeroClipboard.min.js"></script>
 
-    <script src="/bower_components/angular/angular.min.js"></script>
-    <script src="/bower_components/angular-file-upload/angular-file-upload.min.js"></script>
-    <script src="/bower_components/ng-clip/dest/ng-clip.min.js"></script>
+    <script src="/assets/lib/angular/angular.min.js"></script>
+    <script src="/assets/lib/angular-file-upload/angular-file-upload.min.js"></script>
+    <script src="/assets/lib/ng-clip/dest/ng-clip.min.js"></script>
 
-    <script src="/javascripts/application.js"></script>
-    <script src="/javascripts/angular-file-upload-thumb.js"></script>
+    <script src="/assets/application.js"></script>
+    <script src="/assets/angular-file-upload-thumb.js"></script>
   </head>
   <body ng-controller="UploadCtrl" nv-file-over=""
         over-class="highlight"
         uploader="uploader"
         ng-keyup="handleKey($event)">
+        
     <%= include _header %>
 
     <div class="viewport">
