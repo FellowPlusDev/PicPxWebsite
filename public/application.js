@@ -19,6 +19,9 @@ app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {
   });
 
   angular.element('body').on('paste', function($event) {
+    // 粘贴时，自动切换到 uploader 视频
+    $scope.view = 'uploader';
+
     var items = $event.originalEvent.clipboardData.items;
     for (var i = 0; i < items.length; i++) {
       var item = items[i];
