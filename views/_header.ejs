@@ -4,8 +4,12 @@
   </a>
 
   <nav>
-    <a href="" class="active">上传</a>
-    <a href="">浏览</a>
+    <a href="javascript:;"
+       ng-click="activeView('uploader')"
+       ng-class="{ active: view == 'uploader' }" >上传</a>
+    <a href="javascript:;"
+       ng-click="activeView('history')"
+       ng-class="{ active: view == 'history' }" >浏览</a>
   </nav>
 
   <h3 class="brand">DeepPic</h3>

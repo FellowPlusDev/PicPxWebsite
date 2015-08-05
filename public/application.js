@@ -5,6 +5,8 @@ app.config(['ngClipProvider', function(ngClipProvider) {
 }]);
 
 app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {
+  $scope.view = 'uploader';
+
   var uploader = $scope.uploader = new FileUploader({
     url: 'http://v0.api.upyun.com/deeppic',
     autoUpload: false,
@@ -114,6 +116,10 @@ app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {
     if ($event.keyCode == 27) {
       uploader.clearQueue();
     }
+  };
+
+  $scope.activeView = function(view) {
+    $scope.view = view;
   };
 
   $scope.isOutputVisible = function() {
