@@ -135,4 +135,10 @@ app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {
             .map(function(item) { return item.remoteUrl + '\n'; })
             .value().join('');
   };
+
+  // Fetching all months
+  $scope.months = [];
+  $http.get('/months').success(function(data) {
+    $scope.months = data;
+  });
 });

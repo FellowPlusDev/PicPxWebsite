@@ -21,4 +21,10 @@ app.post('/uptoken', function(req, res) {
   res.json({ policy: policy, signature: signature });
 });
 
+app.get('/months', function(req, res) {
+  utils.getMonths(function(months) {
+    res.json(months);
+  });
+});
+
 module.exports = app;
