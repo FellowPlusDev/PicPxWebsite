@@ -4,6 +4,14 @@ app.config(['ngClipProvider', function(ngClipProvider) {
   ngClipProvider.setPath("/assets/lib/zeroclipboard/dist/ZeroClipboard.swf");
 }]);
 
+app.filter('formatDate', function() {
+  return function(input) {
+    var year  = '20' + input.substr(0, 2) + '年';
+    var month = ''   + parseInt(input.substr(2, 2)) + '月'
+    return year + month;
+  };
+});
+
 app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {
   $scope.view = 'history';
 

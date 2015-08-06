@@ -49,10 +49,9 @@ utils.getMonths = function(callback) {
   var url = utils.urlFor('/');
   request.get(url, function(err, response, body) {
     var lines  = (body || '').split('\n');
-    var months = _.chain(lines)
-                  .map(listLineHandler)
-                  .compact().value();
-                  
+    var months = _.chain(lines).map(listLineHandler).compact()
+                  .sort().reverse().value();
+
     callback(months);
   });
 };
