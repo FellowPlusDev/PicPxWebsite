@@ -5,7 +5,7 @@ app.config(['ngClipProvider', function(ngClipProvider) {
 }]);
 
 app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {
-  $scope.view = 'uploader';
+  $scope.view = 'history';
 
   var uploader = $scope.uploader = new FileUploader({
     url: 'http://v0.api.upyun.com/deeppic',

@@ -1,3 +1,19 @@
-<div class="main" id="view-history" ng-if="view == 'history'">
-  History
+<div class="main view_history" ng-if="view == 'history'">
+  <div class="toolbar">
+    <button class="btn btn-xs btn-default"
+            ng-click="selectAll()">&nbsp;&lt;&nbsp;</button>
+    <button class="btn btn-xs btn-default"
+            ng-click="selectNone()">&nbsp;&gt;&nbsp;</button>
+    <div class="pull-right">
+      <select>
+        <option value="hahah">2015年6月</option>
+        <option value="hahah">2015年4月</option>
+        <option value="hahah">2015年5月</option>
+        <option value="hahah">2015年1月</option>
+      </select>
+    </div>
+  </div>
+  <div class="content">
+    我在这里
+  </div>
 </div><!-- .content -->
