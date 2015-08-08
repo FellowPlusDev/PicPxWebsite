@@ -14,6 +14,7 @@ app.filter('formatDate', function() {
 
 app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {
   $scope.view = 'history';
+  $scope.pictures = [];
 
   var uploader = $scope.uploader = new FileUploader({
     url: 'http://v0.api.upyun.com/deeppic',
@@ -144,9 +145,37 @@ app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {
             .value().join('');
   };
 
+  function currentMonth() {
+    var date = new Date();
+    var year = date.getFullYear().toString().substr(2, 2);
+    var month = date.getMonth() + 1;
+    var prefix = month < 10 ? '0' : '';
+
+    return year + prefix + month;
+  }
+
   // Fetching all months
-  $scope.months = [];
+  var currentMonth = currentMonth();
+  $scope.months = [currentMonth];
+  $scope.currentMonth = currentMonth;
+
+  $scope.onMonthChange = function() {
+    $scope.pictures = [];
+    this.loadPictures(this.currentMonth);
+  };
+
+  $scope.loadPictures = function(month) {
+    $http.get('/months/' + month).success(function(data) {
+      $scope.pictures = data;
+    });
+  };
+
   $http.get('/months').success(function(data) {
     $scope.months = data;
+
+    if (data.length) {
+      $scope.currentMonth = data[0];
+      $scope.onMonthChange();
+    }
   });
 });

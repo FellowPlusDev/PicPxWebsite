@@ -34,7 +34,7 @@ utils.makeSignature = function(policy) {
   return md5(signature);
 };
 
-function listLineHandler(line) {
+function folderListHandler(line) {
   var parts = line.split('\t');
 
   // Returns only folders
@@ -49,10 +49,34 @@ utils.getMonths = function(callback) {
   var url = utils.urlFor('/');
   request.get(url, function(err, response, body) {
     var lines  = (body || '').split('\n');
-    var months = _.chain(lines).map(listLineHandler).compact()
+    var months = _.chain(lines).map(folderListHandler).compact()
                   .sort().reverse().value();
 
     callback(months);
+  });
+};
+
+function fileListHandler(line) {
+  var parts = line.split('\t');
+
+  // Returns only folders
+  if (parts.length != 4 || parts[1] != 'N') {
+    return null;
+  } else {
+    return parts[0];
+  }
+}
+
+utils.getPictures = function(month, callback) {
+  var url = utils.urlFor('/' + month);
+  request.get(url, function(err, response, body) {
+    var lines = (body || '').split('\n');
+    var files = _.chain(lines).map(fileListHandler).compact()
+                 .map(function(filename) {
+                   return config.baseUrl + month + '/' + filename;
+                 }).value();
+
+    callback(files);
   });
 };
 

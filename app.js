@@ -27,4 +27,10 @@ app.get('/months', function(req, res) {
   });
 });
 
+app.get('/months/:month', function(req, res) {
+  utils.getPictures(req.params.month, function(pictures) {
+    res.json(pictures);
+  });
+});
+
 module.exports = app;
