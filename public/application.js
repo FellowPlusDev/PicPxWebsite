@@ -61,6 +61,14 @@ app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {
     });
   };
 
+  $scope.currentList = function() {
+    if (this.view == 'uploader') {
+      return uploader.queue;
+    } else {
+      return this.pictures;
+    }
+  };
+
   $scope.clickUpload = function() {
     angular.element('#file').trigger('click');
   };
@@ -69,8 +77,6 @@ app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {
     if (item.isSuccess) {
       item.isSelected = !(item.isSelected);
     }
-
-    angular.element('#btn-copy').triggerHandler('click');
   };
 
   $scope.selectOutput = function() {
@@ -78,7 +84,7 @@ app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {
   };
 
   $scope.selectAll = function() {
-    _.each(uploader.queue, function(item) {
+    _.each(this.currentList(), function(item) {
       if (item.isSuccess) {
         item.isSelected = true;
       }
@@ -86,7 +92,7 @@ app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {
   };
 
   $scope.selectNone = function() {
-    _.each(uploader.queue, function(item) {
+    _.each(this.currentList(), function(item) {
       if (item.isSuccess) {
         item.isSelected = false;
       }
@@ -111,7 +117,7 @@ app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {
 
   $scope.removeSelection = function() {
     while(true) {
-      var item = _.chain(uploader.queue)
+      var item = _.chain(this.currentList())
                   .where({ isSelected: true })
                   .last().value();
 
@@ -135,14 +141,14 @@ app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {
   };
 
   $scope.isOutputVisible = function() {
-    return _.any(uploader.queue, { isSelected: true });
+    return _.any(this.currentList(), { isSelected: true });
   };
 
   $scope.output = function() {
-    return _.chain(uploader.queue)
+    return _.chain(this.currentList())
             .where({ isSelected: true })
-            .map(function(item) { return item.remoteUrl + '\n'; })
-            .value().join('');
+            .map('remoteUrl')
+            .value().join('\n');
   };
 
   function currentMonth() {
@@ -166,7 +172,9 @@ app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {
 
   $scope.loadPictures = function(month) {
     $http.get('/months/' + month).success(function(data) {
-      $scope.pictures = data;
+      $scope.pictures = _.map(data, function(url) {
+        return { remoteUrl: url, isSuccess: true };
+      });
     });
   };
 

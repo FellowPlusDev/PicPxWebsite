@@ -12,10 +12,11 @@
     </div>
   </div>
   <div class="content">
-    <div class="col-lg-3 col-md-4 col-xs-6 thumb"
+    <div class="col-lg-3 col-md-4 col-xs-6 thumb {{picture.isSelected ? 'selected' : ''}}"
          ng-repeat="picture in pictures">
-      <a href="javascript:;" class="thumbnail">
-        <div class="picture" style="height: 120px; background-image: url({{ picture }}); background-size: cover;"></div>
+      <a href="javascript:;" class="thumbnail"
+         ng-click="toggleSelect(picture)">
+        <div class="picture" style="height: 120px; background-image: url({{ picture.remoteUrl }}); background-size: cover;"></div>
       </a>
     </div>
   </div>
