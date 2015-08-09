@@ -33,4 +33,9 @@ app.get('/months/:month', function(req, res) {
   });
 });
 
+app.post('/remove', function(req, res) {
+  utils.removePicture(req.body.url);
+  res.json({ success: true });
+});
+
 module.exports = app;

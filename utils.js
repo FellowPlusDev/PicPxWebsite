@@ -80,4 +80,12 @@ utils.getPictures = function(month, callback) {
   });
 };
 
+utils.removePicture = function(url) {
+  console.log('Removing', url);
+
+  var filename = url.replace(config.baseUrl, '');
+  var fileUrl  = utils.urlFor('/' + filename);
+  request.del(fileUrl);
+};
+
 module.exports = utils;

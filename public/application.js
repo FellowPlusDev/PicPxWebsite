@@ -99,11 +99,6 @@ app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {
     });
   };
 
-  $scope.removeItem = function(item) {
-    item.cancel();
-    item.remove();
-  };
-
   $scope.getItemUrl = function(item) {
     return item.remoteUrl;
   };
@@ -115,6 +110,17 @@ app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {
     }, 1000);
   };
 
+  $scope.removeItem = function(item) {
+    if (this.view == 'uploader') {
+      item.cancel();
+      item.remove();
+    } else {
+      var index = _.findIndex($scope.pictures, { remoteUrl: item.remoteUrl });
+      $scope.pictures.splice(index, 1);
+      $http.post('/remove', { url: item.remoteUrl });
+    }
+  };
+
   $scope.removeSelection = function() {
     while(true) {
       var item = _.chain(this.currentList())
@@ -122,7 +128,7 @@ app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {
                   .last().value();
 
       if (item) {
-        item.remove();
+        this.removeItem(item);
       } else {
         break;
       }
