@@ -13,7 +13,7 @@ app.filter('formatDate', function() {
 });
 
 app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {
-  $scope.view = 'history';
+  $scope.view = 'uploader';
   $scope.pictures = [];
 
   var uploader = $scope.uploader = new FileUploader({
