@@ -3,5 +3,14 @@
     <img src="http://upfiles.b0.upaiyun.com/logo/90x45.png" alt="UPYUN">
   </a>
 
+  <nav>
+    <a href="javascript:;"
+       ng-click="activeView('uploader')"
+       ng-class="{ active: view == 'uploader' }" >上传</a>
+    <a href="javascript:;"
+       ng-click="activeView('history')"
+       ng-class="{ active: view == 'history' }" >浏览</a>
+  </nav>
+
   <h3 class="brand">DeepPic</h3>
 </div>

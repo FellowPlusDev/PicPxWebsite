@@ -1,10 +1,21 @@
 var app = angular.module('DeepPicApp', ['angularFileUpload', 'ngClipboard']);
 
 app.config(['ngClipProvider', function(ngClipProvider) {
-  ngClipProvider.setPath("/bower_components/zeroclipboard/dist/ZeroClipboard.swf");
+  ngClipProvider.setPath("/assets/lib/zeroclipboard/dist/ZeroClipboard.swf");
 }]);
 
+app.filter('formatDate', function() {
+  return function(input) {
+    var year  = '20' + input.substr(0, 2) + '年';
+    var month = ''   + parseInt(input.substr(2, 2)) + '月'
+    return year + month;
+  };
+});
+
 app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {
+  $scope.view = 'uploader';
+  $scope.pictures = [];
+
   var uploader = $scope.uploader = new FileUploader({
     url: 'http://v0.api.upyun.com/deeppic',
     autoUpload: false,
@@ -17,6 +28,9 @@ app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {
   });
 
   angular.element('body').on('paste', function($event) {
+    // 粘贴时，自动切换到 uploader 视频
+    $scope.view = 'uploader';
+
     var items = $event.originalEvent.clipboardData.items;
     for (var i = 0; i < items.length; i++) {
       var item = items[i];
@@ -47,6 +61,14 @@ app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {
     });
   };
 
+  $scope.currentList = function() {
+    if (this.view == 'uploader') {
+      return uploader.queue;
+    } else {
+      return this.pictures;
+    }
+  };
+
   $scope.clickUpload = function() {
     angular.element('#file').trigger('click');
   };
@@ -55,8 +77,6 @@ app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {
     if (item.isSuccess) {
       item.isSelected = !(item.isSelected);
     }
-
-    angular.element('#btn-copy').triggerHandler('click');
   };
 
   $scope.selectOutput = function() {
@@ -64,7 +84,7 @@ app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {
   };
 
   $scope.selectAll = function() {
-    _.each(uploader.queue, function(item) {
+    _.each(this.currentList(), function(item) {
       if (item.isSuccess) {
         item.isSelected = true;
       }
@@ -72,16 +92,11 @@ app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {
   };
 
   $scope.selectNone = function() {
-    _.each(uploader.queue, function(item) {
+    _.each(this.currentList(), function(item) {
       if (item.isSuccess) {
         item.isSelected = false;
       }
     });
-  };
-
-  $scope.removeItem = function(item) {
-    item.cancel();
-    item.remove();
   };
 
   $scope.getItemUrl = function(item) {
@@ -95,14 +110,25 @@ app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {
     }, 1000);
   };
 
+  $scope.removeItem = function(item) {
+    if (this.view == 'uploader') {
+      item.cancel();
+      item.remove();
+    } else {
+      var index = _.findIndex($scope.pictures, { remoteUrl: item.remoteUrl });
+      $scope.pictures.splice(index, 1);
+      $http.post('/remove', { url: item.remoteUrl });
+    }
+  };
+
   $scope.removeSelection = function() {
     while(true) {
-      var item = _.chain(uploader.queue)
+      var item = _.chain(this.currentList())
                   .where({ isSelected: true })
                   .last().value();
 
       if (item) {
-        item.remove();
+        this.removeItem(item);
       } else {
         break;
       }
@@ -116,14 +142,54 @@ app.controller('UploadCtrl', function($scope, $timeout, $http, FileUploader) {
     }
   };
 
+  $scope.activeView = function(view) {
+    $scope.view = view;
+  };
+
   $scope.isOutputVisible = function() {
-    return _.any(uploader.queue, { isSelected: true });
+    return _.any(this.currentList(), { isSelected: true });
   };
 
   $scope.output = function() {
-    return _.chain(uploader.queue)
+    return _.chain(this.currentList())
             .where({ isSelected: true })
-            .map(function(item) { return item.remoteUrl + '\n'; })
-            .value().join('');
+            .map('remoteUrl')
+            .value().join('\n');
   };
+
+  function currentMonth() {
+    var date = new Date();
+    var year = date.getFullYear().toString().substr(2, 2);
+    var month = date.getMonth() + 1;
+    var prefix = month < 10 ? '0' : '';
+
+    return year + prefix + month;
+  }
+
+  // Fetching all months
+  var currentMonth = currentMonth();
+  $scope.months = [currentMonth];
+  $scope.currentMonth = currentMonth;
+
+  $scope.onMonthChange = function() {
+    $scope.pictures = [];
+    this.loadPictures(this.currentMonth);
+  };
+
+  $scope.loadPictures = function(month) {
+    $http.get('/months/' + month).success(function(data) {
+      $scope.pictures = _.map(data, function(url) {
+        return { remoteUrl: url, isSuccess: true };
+      });
+    });
+  };
+
+  $http.get('/months').success(function(data) {
+    $scope.months = data;
+
+    if (data.length) {
+      $scope.currentMonth = data[0];
+      $scope.onMonthChange();
+    }
+  });
 });

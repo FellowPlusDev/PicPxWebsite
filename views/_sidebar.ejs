@@ -1,0 +1,21 @@
+<div class="sidebar">
+  <div class="toolbar">
+    <button class="btn btn-xs btn-default"
+            ng-click="selectAll()">全选</button>
+    <button class="btn btn-xs btn-default"
+            ng-click="selectNone()">取消</button>
+    <button class="btn btn-xs btn-default"
+            id="btn-copy"
+            clip-copy="output()"
+            ng-click="selectOutput()">复制外链</button>
+    <div class="pull-right">
+      <button class="btn btn-xs btn-default"
+              ng-click="removeSelection()">移除所选</button>
+    </div>
+  </div>
+
+  <div class="content">
+    <textarea wrap="off" readonly="readonly">{{output()}}</textarea>  
+  </div>
+  
+</div><!-- .sidebar -->
